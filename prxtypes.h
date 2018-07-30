@@ -15,8 +15,8 @@
 #define PSP_LIB_MAX_NAME 128
 #define PSP_ENTRY_MAX_NAME 128
 /* Define the maximum number of permitted entries per lib */
-#define PSP_MAX_V_ENTRIES 255
-#define PSP_MAX_F_ENTRIES 2000
+#define PSP_MAX_V_ENTRIES 65535
+#define PSP_MAX_F_ENTRIES 65535
 
 #define PSP_MODULE_INFO_NAME ".rodata.sceModuleInfo"
 
@@ -34,24 +34,53 @@ enum PspEntryType
 /* Structure to hold the module export information */
 struct PspModuleExport
 {
+	u16 size;
+	u16 version;
+	u16 flags;
+	u16 f_count;
+	u32 v_count;
+	u32 u_count;
+	u32 nid;
 	u32 name;
-	u32 flags;
-	u32 counts;
-	u32 exports;
+	u32 export_nids;
+	u32 export_entry_table;
 };
 
-/* Base size of an import structure */
-#define PSP_IMPORT_BASE_SIZE (5*4)
-
 /* Structure to hold the module import information */
-struct PspModuleImport
+struct PspModuleImport2xx
 {
+	u16 size;
+	u16 version;
+	u16 flags;
+	u16 f_count;
+	u16 v_count;
+	u16 u_count;
+	u32 reserved1;
+	u32 nid;
 	u32 name;
-	u32 flags;
-	u32 counts;
-	u32 nids;
-	u32 funcs;
-	u32 vars;
+	u32 reserved2;
+	u32 func_nids;
+	u32 func_entry_table;
+	u32 var_nids;
+	u32 var_entry_table;
+	u32 unk_nids;
+	u32 unk_entry_table;
+};
+
+struct PspModuleImport3xx
+{
+	u16 size;
+	u16 version;
+	u16 flags;
+	u16 f_count;
+	u16 v_count;
+	u16 reserved1;
+	u32 nid;
+	u32 name;
+	u32 func_nids;
+	u32 func_entry_table;
+	u32 var_nids;
+	u32 var_entry_table;
 };
 
 /* Structure to hold the module info */
@@ -93,7 +122,7 @@ struct PspLibImport
 	/** Virtual address of the lib import stub */
 	u32 addr;
 	/** Copy of the import stub (in native byte order) */
-	PspModuleImport stub;
+	PspModuleImport2xx stub;
 	/** List of function entries */
 	PspEntry funcs[PSP_MAX_F_ENTRIES];
 	/** Number of function entries */

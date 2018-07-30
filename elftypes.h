@@ -121,7 +121,7 @@ typedef u32 Elf32_Word;
 #define ELF_MAGIC	0x464C457F
 
 #define ELF_MIPS_TYPE 0x0002
-#define ELF_PRX_TYPE  0xFFA0
+#define ELF_PRX_TYPE  0xFE04
 
 #define SHT_NULL 0 
 #define SHT_PROGBITS 1 
@@ -179,8 +179,22 @@ typedef u32 Elf32_Word;
 #define PT_LOPROC 		0x70000000
 #define PT_HIPROC 		0x7fffffff
 
-#define PT_PRXRELOC             0x700000A0
-#define PT_PRXRELOC2            0x700000A1
+#define PT_SCE_RELA             0x60000000
+
+#define R_ARM_NONE              0
+#define R_ARM_ABS32             2
+#define R_ARM_REL32             3
+#define R_ARM_THM_CALL          10
+#define R_ARM_CALL              28
+#define R_ARM_JUMP24            29
+#define R_ARM_TARGET1           38
+#define R_ARM_V4BX              40
+#define R_ARM_TARGET2           41
+#define R_ARM_PREL31            42
+#define R_ARM_MOVW_ABS_NC       43
+#define R_ARM_MOVT_ABS          44
+#define R_ARM_THM_MOVW_ABS_NC   47
+#define R_ARM_THM_MOVT_ABS      48
 
 /* ELF file header */
 typedef struct { 

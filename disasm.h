@@ -26,6 +26,7 @@ typedef std::vector<std::string> AliasMap;
 
 struct SymbolEntry
 {
+	int isArm;
 	unsigned int addr;
 	SymbolType type;
 	unsigned int size;
@@ -58,10 +59,11 @@ typedef std::map<unsigned int, ImmEntry *> ImmMap;
 #define DISASM_OPT_PRINTSWAP 'w'
 #define DISASM_OPT_SIGNEDHEX 'd'
 
-#define INSTR_TYPE_PSP    1
-#define INSTR_TYPE_B      2
-#define INSTR_TYPE_JUMP   4
-#define INSTR_TYPE_JAL    8
+#define INSTR_TYPE_B      1
+#define INSTR_TYPE_BL     2
+
+void disasmOpen(int isArm);
+void disasmClose();
 
 /* Enable hexadecimal integers for immediates */
 void disasmSetHexInts(int hexints);
@@ -75,11 +77,11 @@ void disasmSetPrintReal(int printreal);
 void disasmSetOpts(const char *opts, int set);
 const char *disasmGetOpts(void);
 void disasmPrintOpts(void);
-const char *disasmInstruction(unsigned int opcode, unsigned int PC, unsigned int *realregs, unsigned int *regmask, int noaddr);
-const char *disasmInstructionXML(unsigned int opcode, unsigned int PC);
+const char *disasmInstruction(unsigned int opcode, unsigned int *PC, unsigned int *realregs, unsigned int *regmask, int noaddr);
+const char *disasmInstructionXML(unsigned int opcode, unsigned int *PC);
 
 void disasmSetSymbols(SymbolMap *syms);
-void disasmAddBranchSymbols(unsigned int opcode, unsigned int PC, SymbolMap &syms);
+void disasmAddBranchSymbols(unsigned int opcode, unsigned int *PC, SymbolMap &syms);
 SymbolType disasmResolveSymbol(unsigned int PC, char *name, int namelen);
 SymbolEntry* disasmFindSymbol(unsigned int PC);
 int disasmIsBranch(unsigned int opcode, unsigned int PC, unsigned int *dwTarget);

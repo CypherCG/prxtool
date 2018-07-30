@@ -11,6 +11,7 @@
 
 #include "types.h"
 #include <tinyxml/tinyxml.h>
+#include "yamltree.h"
 #include <vector>
 
 #define LIB_NAME_MAX 64
@@ -91,7 +92,10 @@ public:
 	~CNidMgr();
 	const char *FindLibName(const char *lib, u32 nid);
 	const char *FindDependancy(const char *lib);
+	bool vita_imports_load_yml(FILE *text, int verbose);
+	bool read_vita_imports_yml(yaml_document *doc);
 	bool AddXmlFile(const char *szFilename);
+	bool AddNIDFile(const char *szFilename);
 	LibraryEntry *GetLibraries(void);
 	bool AddFunctionFile(const char *szFilename);
 	FunctionType *FindFunctionType(const char *name);

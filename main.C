@@ -925,7 +925,7 @@ int main(int argc, char **argv)
 
 		if(g_pNamefile != NULL)
 		{
-			(void) nids.AddXmlFile(g_pNamefile);
+			(void) nids.AddNIDFile(g_pNamefile);
 		}
 		if(g_pFuncfile != NULL)
 		{
@@ -940,7 +940,7 @@ int main(int argc, char **argv)
 		{
 			CNidMgr nidData;
 
-			if(nidData.AddXmlFile(g_ppInfiles[0]))
+			if(nidData.AddNIDFile(g_ppInfiles[0]))
 			{
 				output_stubs_xml(&nidData);
 			}
